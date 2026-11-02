@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TimeTruth – AI Task Duration Predictor</title>
+<link rel="stylesheet" href="styles.css"></head>
+<body>
+<header>
+  <h1>⏱ TimeTruth <span class="mut">AI Task Duration Predictor</span></h1>
+  <nav>
+    <button data-go="dash" class="on" onclick="go('dash')">Dashboard</button>
+    <button data-go="predict" onclick="go('predict')">Predict Time</button>
+    <button data-go="track" onclick="go('track')">Task Tracker</button>
+    <button data-go="analytics" onclick="go('analytics')">Analytics</button>
+    <button data-go="history" onclick="go('history')">History</button>
+  </nav>
+</header>
+<main>
+<section id="dash" class="on">
+  <div id="kpis" class="grid"></div>
+  <div class="card"><h2>Recent tasks</h2><div id="recent"></div></div>
+  <div class="card"><h2>Quick start</h2>
+    <p class="mut">The model is trained on generated history. Load demo data to see the personal adjustment work (8 tasks that take about 30% longer than predicted).</p>
+    <button class="s" onclick="loadDemo()">Load demo data</button>
+    <button class="p" onclick="go('predict')">Predict a task →</button></div>
+</section>
+<section id="predict">
+  <div class="card">
+    <h2>1 · Enter task details</h2>
+    <label>Task name<input id="tn" value="Build a machine learning model"></label>
+    <div class="row">
+      <label>Category<select id="cat"><option>Programming</option><option>Writing</option><option>Studying</option><option>Design</option></select></label>
+      <label>Difficulty<select id="dif"><option>Easy</option><option selected>Medium</option><option>Hard</option></select></label>
+      <label>Experience<select id="exp"><option>Beginner</option><option selected>Intermediate</option><option>Expert</option></select></label>
+      <label>Priority<select id="pri"><option>Low</option><option selected>Medium</option><option>High</option></select></label>
+      <label>Your estimate (hours)<input id="est" type="number" min="0.25" step="0.25" value="3"></label>
+    </div>
+    <button class="p" onclick="predictNow()">Predict completion time</button>
+    <p id="pmsg" class="mut"></p>
+  </div>
+  <div id="res" class="card" style="display:none"></div>
+</section>
+<section id="track">
+  <div class="card" style="text-align:center">
+    <div class="mut">Current task</div>
+    <h2 id="tname"></h2>
+    <div id="tstat" class="mut"></div>
+    <div class="clock" id="clock">00:00:00</div>
+    <div class="bar"><i id="tbar"></i></div>
+    <div class="mut" id="tpct"></div>
+    <div class="row" style="justify-content:center;max-width:520px;margin:18px auto">
+      <div>AI prediction<br><b id="tpred">—</b></div>
+      <div>Actual time<br><b id="tact">—</b></div>
+    </div>
+    <div style="margin-top:14px">
+      <button class="s" id="bS" onclick="startT()">Start</button>
+      <button class="s" id="bP" onclick="pauseT()">Pause</button>
+      <button class="s" id="bR" onclick="startT()">Resume</button>
+      <button class="p" id="bC" onclick="completeT()">Complete task</button>
+    </div>
+    <p id="tmsg" class="mut"></p>
+  </div>
+</section>
+<section id="analytics">
+  <div class="card"><h2>Model comparison (held-out tasks)</h2><div id="mtab"></div>
+    <p class="note">Trained on 320 tasks, tested on 80 the model has never seen. The baseline always predicts the average.</p></div>
+  <div class="card"><h2>Predicted vs actual</h2><div id="scatter"></div></div>
+</section>
+<section id="history">
+  <div class="card"><h2>Completed tasks</h2><div id="htab"></div>
+    <button class="s" onclick="clearAll()">Clear all history</button></div>
+</section>
+</main>
+<script src="app.js"></script>
+</body></html>
